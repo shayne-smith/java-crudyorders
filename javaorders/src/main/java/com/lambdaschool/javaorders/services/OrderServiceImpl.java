@@ -1,7 +1,9 @@
 package com.lambdaschool.javaorders.services;
 
+import com.lambdaschool.javaorders.models.Customer;
 import com.lambdaschool.javaorders.models.Order;
 import com.lambdaschool.javaorders.models.Payment;
+import com.lambdaschool.javaorders.repositories.CustomerRepository;
 import com.lambdaschool.javaorders.repositories.OrderRepository;
 import com.lambdaschool.javaorders.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private PaymentRepository payrepos;
+
+    @Autowired
+    private CustomerRepository custrepos;
 
     @Override
     public Order findOrderById(long id) {
@@ -57,7 +62,9 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setAdvanceamount(order.getAdvanceamount());
         newOrder.setOrdamount(order.getOrdamount());
         newOrder.setOrderdescription(order.getOrderdescription());
-        newOrder.setCustomer(order.getCustomer());
+        // newOrder.setCustomer(order.getCustomer());
+        newOrder.setCustomer(custrepos.findById(order.getCustomer().getCustcode())
+            .orElseThrow(() -> new EntityNotFoundException("Customer " + order.getCustomer().getCustcode() + " Not Found")));
 
         newOrder.getPayments().clear();
         // newRestaurant.setMenus(restaurant.getMenus()); // assigns the pointer
