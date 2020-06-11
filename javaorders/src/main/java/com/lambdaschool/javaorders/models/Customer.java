@@ -49,7 +49,7 @@ public class Customer {
             cascade = CascadeType.ALL,
             orphanRemoval = true)
     @JsonIgnoreProperties(value = "customers")
-    private List<Order> orders = new ArrayList<>();
+    List<Order> orders = new ArrayList<>();
 
     public Customer() {
     }

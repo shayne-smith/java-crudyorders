@@ -29,7 +29,7 @@ public class Order {
             joinColumns = @JoinColumn(name = "ordnum"),
             inverseJoinColumns = @JoinColumn(name = "paymentid"))
     @JsonIgnoreProperties(value = "orders")
-    private List<Payment> payments = new ArrayList<>();
+    List<Payment> payments = new ArrayList<>();
 
     public Order() {
     }
@@ -79,6 +79,11 @@ public class Order {
 
     public void setPayments(List<Payment> payments) {
         this.payments = payments;
+    }
+
+    public void addPayment(Payment payment) {
+        payment.getOrders().add(this);
+        payments.add(payment);
     }
 
     public Customer getCustomer() {

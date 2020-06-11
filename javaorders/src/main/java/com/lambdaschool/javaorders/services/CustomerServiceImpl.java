@@ -4,6 +4,7 @@ import com.lambdaschool.javaorders.models.Customer;
 import com.lambdaschool.javaorders.models.Order;
 import com.lambdaschool.javaorders.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
         if (custrepos.findById(custcode).isPresent()) {
             custrepos.deleteById(custcode);
         } else {
-            throw new EntityNotFoundException("Customer " + custcode + " Not Found");
+           throw new EntityNotFoundException("Customer " + custcode + " Not Found");
         }
     }
 

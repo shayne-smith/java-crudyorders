@@ -1,7 +1,9 @@
 package com.lambdaschool.javaorders.services;
 
 import com.lambdaschool.javaorders.models.Order;
+import com.lambdaschool.javaorders.models.Payment;
 import com.lambdaschool.javaorders.repositories.OrderRepository;
+import com.lambdaschool.javaorders.repositories.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRepository orderrepos;
+
+    @Autowired
+    private PaymentRepository payrepos;
 
     @Override
     public Order findOrderById(long id) {
@@ -49,32 +54,21 @@ public class OrderServiceImpl implements OrderService {
             newOrder.setOrdnum(order.getOrdnum());
         }
 
-        // double advanceamount, double ordamount, String orderdescription, Customer customer
-
         newOrder.setAdvanceamount(order.getAdvanceamount());
         newOrder.setOrdamount(order.getOrdamount());
         newOrder.setOrderdescription(order.getOrderdescription());
         newOrder.setCustomer(order.getCustomer());
 
-        newOrder.getCustomers().clear();
+        newOrder.getPayments().clear();
         // newRestaurant.setMenus(restaurant.getMenus()); // assigns the pointer
-        for (Menu m : restaurant.getMenus())
-        {
-            Menu newMenu = new Menu(m.getDish(), m.getPrice(), newOrder);
-            newOrder.getMenus()
-                .add(newMenu);
-        }
-
-        newOrder.getPayments()
-            .clear();
-        for (Payment p : restaurant.getPayments())
+        for (Payment p : order.getPayments())
         {
             Payment newPay = payrepos.findById(p.getPaymentid())
                 .orElseThrow(() -> new EntityNotFoundException("Payment " + p.getPaymentid() + " Not Found"));
             newOrder.addPayment(newPay);
         }
 
-        return order.save(newOrder);
+        return orderrepos.save(newOrder);
     }
 
 
