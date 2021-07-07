@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/java-crudyorders.iml" filepath="$PROJECT_DIR$/java-crudyorders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javaorders/javaorders.iml" filepath="$PROJECT_DIR$/javaorders/javaorders.iml" />
+    </modules>
+  </component>
+</project>
